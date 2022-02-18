@@ -119,40 +119,59 @@ generatePasswordLength = function () {
     generatePasswordLength();
   } else generatePasswordCriteria();
 };
+//
+var characterConfirm = function (character) {
+ 
+ characterTypeToConfirm = (character + "Confirm");
+ characterRequired = (character + "CharacterRequired");
+ characterArray = (character + "Array");
+  if (window[characterTypeToConfirm]) {
+    window[characterRequired] = true;
+    concatPasswordArray(window[characterArray]);
+  }
+  debugger
+  console.log(window[characterTypeToConfirm])
+  console.log(window[characterRequired])
+  console.log(window[characterArray])
+  characterTypeToConfirm = ""
+  characterRequired = ""
+  characterArray = ""
 
+}
 
 var generatePasswordCriteria = function () {
   passwordArray = [];
-
-  var lowercaseConfirm = confirm(
+//
+   lowercaseConfirm = confirm(
     "Do you want your password to include lowercase letters?"
   );
-  if (lowercaseConfirm) {
-    lowercaseCharacterRequired = true;
-    concatPasswordArray(lowercaseArray);
-  }
+  characterConfirm("lowercase")
+  // if (lowercaseConfirm) {
+  //   lowercaseCharacterRequired = true;
+  //   concatPasswordArray(lowercaseArray);
+  // }
   var uppercaseConfirm = confirm(
     "Do you want your password to include uppercase letters?"
   );
-
-  if (uppercaseConfirm) {
-    uppercaseCharacterRequired = true;
-    concatPasswordArray(uppercaseArray);
-  }
+characterConfirm("uppercase")
+  // if (uppercaseConfirm) {
+  //   uppercaseCharacterRequired = true;
+  //   concatPasswordArray(uppercaseArray);
+  // }
   var numConfirm = confirm("Do you want your password to include numbers?");
-
-  if (numConfirm) {
-    numCharacterRequired = true;
-    concatPasswordArray(numArray);
-  }
+characterConfirm("num")
+  // if (numConfirm) {
+  //   numCharacterRequired = true;
+  //   concatPasswordArray(numArray);
+  // }
   var symbolConfirm = confirm(
     "Do you want your password to include special symbols?"
   );
-
-  if (symbolConfirm) {
-    symbolCharacterRequired = true;
-    concatPasswordArray(symbolArray);
-  }
+characterConfirm("symbol")
+  // if (symbolConfirm) {
+  //   symbolCharacterRequired = true;
+  //   concatPasswordArray(symbolArray);
+  // }
   if (!lowercaseConfirm && !uppercaseConfirm && !numConfirm && !symbolConfirm) {
     alert("Please choose at least one type of character for your password");
     generatePasswordCriteria();
