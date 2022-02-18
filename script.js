@@ -125,7 +125,7 @@ generatePasswordLength = function () {
   passwordLengthNum = parseInt(passwordLength);
   if (
     !passwordLength ||
-    passwordLength < 8 ||
+    passwordLength < 4 ||
     passwordLength > 128 ||
     isNaN(passwordLength)
   ) {
@@ -133,30 +133,24 @@ generatePasswordLength = function () {
     generatePasswordLength();
   }
   else
-  generateCriteria()
+  generatePasswordCriteria()
 };
 
- parameterInputConfirm = function (characterType) {
-   if ((characterType + "Confirm") ) {
-     (characterType + "CharacterRequired") = true;
-     concatPasswordArray((characterType + "Array"));
-   }
- }
+ 
 
-var generateCriteria = function () {
-  passwordArray = [];
+var generatePasswordCriteria = function() {
+  passwordArray = []; 
 
   var lowercaseConfirm = confirm(
     "Do you want your password to include lowercase letters?"
   );
-  parameterInputConfirm(lowercase)
-  // if (lowercaseConfirm) {
-  //   lowercaseCharacterRequired = true;
-  //   concatPasswordArray(lowercaseArray);
-  // }
-  // var uppercaseConfirm = confirm(
-  //   "Do you want your password to include uppercase letters?"
-  // );
+  if (lowercaseConfirm) {
+    lowercaseCharacterRequired = true;
+    concatPasswordArray(lowercaseArray);
+  }
+  var uppercaseConfirm = confirm(
+    "Do you want your password to include uppercase letters?"
+  );
 
   if (uppercaseConfirm) {
     uppercaseCharacterRequired = true;
@@ -178,14 +172,18 @@ var generateCriteria = function () {
   }
   if (!lowercaseConfirm && !uppercaseConfirm && !numConfirm && !symbolConfirm) {
     alert("Please choose at least one type of character for your password");
-    generateCriteria();
-    return
+    generatePasswordCriteria();
+    return;
   }
-  generatePassword()
+else generatePassword()
 }
 
-var generatePassword = function() {
-  password = []
+
+  var generatePassword = function () {
+    lowercaseCharacterCheck = false;
+  uppercaseCharacterCheck = false;
+  numCharacterCheck = false;
+  symbolCharacterCheck = false;
   for (var i = 1; i <= passwordLengthNum; i++) {
     if (password) {
       var nextCharacterLocation = randomNumberForArray(passwordArray.length);
@@ -314,7 +312,7 @@ var generatePassword = function() {
     numCharacterCheck != numCharacterRequired ||
     symbolCharacterCheck != symbolCharacterRequired
   ) {
-    tryAgain();
+    generatePassword();
   }
   else
   finalPassword = password
