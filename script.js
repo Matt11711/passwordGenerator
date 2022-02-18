@@ -184,8 +184,9 @@ else generatePassword()
   uppercaseCharacterCheck = false;
   numCharacterCheck = false;
   symbolCharacterCheck = false;
+  var password = ""
   for (var i = 1; i <= passwordLengthNum; i++) {
-    if (password) {
+    
       var nextCharacterLocation = randomNumberForArray(passwordArray.length);
      
       if (lowercaseCharacterRequired && !lowercaseCharacterCheck) {
@@ -243,66 +244,7 @@ else generatePassword()
       }
 
       password = password + passwordArray[nextCharacterLocation];
-    } else {
-      var nextCharacterLocation = randomNumberForArray(passwordArray.length);
-
-      
-        if (lowercaseCharacterRequired && !lowercaseCharacterCheck) {
-          for (
-            var lowercaseIndex = 0;
-            lowercaseIndex < lowercaseArray.length;
-            lowercaseIndex++
-          ) {
-            if (
-              lowercaseArray[lowercaseIndex] ===
-              passwordArray[nextCharacterLocation]
-            ) {
-              lowercaseCharacterCheck = true;
-              break;
-            }
-          }
-        }
-        if (uppercaseCharacterRequired && !uppercaseCharacterCheck) {
-          for (
-            var uppercaseIndex = 0;
-            uppercaseIndex < uppercaseArray.length;
-            uppercaseIndex++
-          ) {
-            if (
-              uppercaseArray[uppercaseIndex] ===
-              passwordArray[nextCharacterLocation]
-            ) {
-              uppercaseCharacterCheck = true;
-              break;
-            }
-          }
-        }
-        if (numCharacterRequired && !numCharacterCheck) {
-          for (var numIndex = 0; numIndex < numArray.length; numIndex++) {
-            if (numArray[numIndex] === passwordArray[nextCharacterLocation]) {
-              numCharacterCheck = true;
-              break;
-            }
-          }
-        }
-
-        if (symbolCharacterRequired && !symbolCharacterCheck) {
-          for (
-            var symbolIndex = 0;
-            symbolIndex < symbolArray.length;
-            symbolIndex++
-          ) {
-            if (
-              symbolArray[symbolIndex] === passwordArray[nextCharacterLocation]
-            ) {
-              symbolCharacterCheck = true;
-              break;
-            }
-          }
-        }
-
-        var password = passwordArray[nextCharacterLocation];
-      }
+   
     
   }
  
@@ -328,6 +270,7 @@ var tryAgain = function () {
   uppercaseCharacterCheck = false;
   numCharacterCheck = false;
   symbolCharacterCheck = false;
+  console.log("HI")
   for (var i = 1; i <= passwordLengthNum; i++) {
     if (password) {
       var nextCharacterLocation = randomNumberForArray(passwordArray.length);
