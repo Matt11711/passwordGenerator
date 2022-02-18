@@ -125,33 +125,38 @@ generatePasswordLength = function () {
   passwordLengthNum = parseInt(passwordLength);
   if (
     !passwordLength ||
-    passwordLength < 4 ||
+    passwordLength < 8 ||
     passwordLength > 128 ||
     isNaN(passwordLength)
   ) {
     alert("Please choose a numerical length between 8 and 128.");
     generatePasswordLength();
   }
-  generatePassword()
+  else
+  generateCriteria()
 };
-// Add event listener to generate button
-generateBtn.addEventListener("click", generatePasswordLength);
 
- 
+ parameterInputConfirm = function (characterType) {
+   if ((characterType + "Confirm") ) {
+     (characterType + "CharacterRequired") = true;
+     concatPasswordArray((characterType + "Array"));
+   }
+ }
 
-var generatePassword = function () {
+var generateCriteria = function () {
   passwordArray = [];
 
   var lowercaseConfirm = confirm(
     "Do you want your password to include lowercase letters?"
   );
-  if (lowercaseConfirm) {
-    lowercaseCharacterRequired = true;
-    concatPasswordArray(lowercaseArray);
-  }
-  var uppercaseConfirm = confirm(
-    "Do you want your password to include uppercase letters?"
-  );
+  parameterInputConfirm(lowercase)
+  // if (lowercaseConfirm) {
+  //   lowercaseCharacterRequired = true;
+  //   concatPasswordArray(lowercaseArray);
+  // }
+  // var uppercaseConfirm = confirm(
+  //   "Do you want your password to include uppercase letters?"
+  // );
 
   if (uppercaseConfirm) {
     uppercaseCharacterRequired = true;
@@ -173,9 +178,14 @@ var generatePassword = function () {
   }
   if (!lowercaseConfirm && !uppercaseConfirm && !numConfirm && !symbolConfirm) {
     alert("Please choose at least one type of character for your password");
-    generatePassword();
+    generateCriteria();
+    return
   }
-  
+  generatePassword()
+}
+
+var generatePassword = function() {
+  password = []
   for (var i = 1; i <= passwordLengthNum; i++) {
     if (password) {
       var nextCharacterLocation = randomNumberForArray(passwordArray.length);
@@ -454,3 +464,5 @@ var tryAgain = function () {
   finalPassword = password;
   writePassword()
 };
+// Add event listener to generate button
+generateBtn.addEventListener("click", generatePasswordLength);
