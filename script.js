@@ -1,6 +1,3 @@
-// selects where to read button click from
-var generateBtn = document.querySelector("#generate");
-
 // arrays for each possible type of character in the password
 var lowercaseArray = [
   "q",
@@ -68,8 +65,18 @@ var symbolArray = [
   "}",
   "~",
 ];
-var password = "";
-
+var password;
+var lowercaseCharacterCheck; 
+  var uppercaseCharacterCheck;
+  var numCharacterCheck; 
+  var symbolCharacterCheck;
+  var lowercaseCharacterRequired; 
+  var uppercaseCharacterRequired; 
+  var numCharacterRequired;
+  var symbolCharacterRequired; 
+  var finalPassword; 
+var passwordLengthNum;
+var passwordArray;
 // function to return uppercase value of an input letter
 var toUpper = function (letter) {
   return letter.toUpperCase();
@@ -83,13 +90,7 @@ var randomNumberForArray = function (arrayLength) {
   return Math.floor(Math.random() * arrayLength);
 };
 
-// Write password to the #password input
-function writePassword() {
-  //selects where to put password
-  var passwordText = document.querySelector("#password");
-  // writes password to that location
-  passwordText.value = finalPassword;
-}
+
 // function to generate password length
 generatePasswordLength = function () {
   // resetting some variables in case the button is pressed again. Maybe should declare these all as global at the top of the script but I don't know of any reason to yet
@@ -214,6 +215,17 @@ var generatePassword = function () {
   } else finalPassword = password;
   writePassword();
 };
+
+// Write password to the #password input
+function writePassword() {
+  //selects where to put password
+  var passwordText = document.querySelector("#password");
+  // writes password to that location
+  passwordText.value = finalPassword;
+}
+
+// selects where to read button click from
+var generateBtn = document.querySelector("#generate");
 
 // Add event listener to generate button
 generateBtn.addEventListener("click", generatePasswordLength);
