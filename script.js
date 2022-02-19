@@ -70,10 +70,6 @@ var symbolArray = [
 ];
 var password = "";
 
-// adds given array to the password array
-var concatPasswordArray = function (arrayToConcat) {
-  passwordArray = passwordArray.concat(arrayToConcat);
-};
 // function to return uppercase value of an input letter
 var toUpper = function (letter) {
   return letter.toUpperCase();
@@ -116,7 +112,7 @@ generatePasswordLength = function () {
   // checks for password length fitting the parameters and brings them back to the prompt for length if their password length wasn't valid. If it is valid, moves on to generating the password
   if (
     !passwordLengthNum ||
-    passwordLengthNum < 4 ||
+    passwordLengthNum < 8 ||
     passwordLengthNum > 128 ||
     isNaN(passwordLength)
   ) {
@@ -125,12 +121,25 @@ generatePasswordLength = function () {
   } else generatePasswordCriteria();
 };
 
-// given the type of character, makes that type of character required and adds those characters to the password array
+// given the type of character, makes that type of character required and adds an identifier number to the password array
 
 var characterConfirm = function (character) {
   if (window[character + "Confirm"]) {
     window[character + "CharacterRequired"] = true;
-    concatPasswordArray(window[character + "Array"]);
+    switch (character) {
+      case "lowercase":
+        passwordArray.push(1);
+        break;
+      case "uppercase":
+        passwordArray.push(2);
+        break;
+      case "num":
+        passwordArray.push(3);
+        break;
+      case "symbol":
+        passwordArray.push(4);
+        break;
+    }
   }
 };
 
@@ -162,25 +171,7 @@ var generatePasswordCriteria = function () {
     return;
   } else generatePassword();
 };
-// checks for a character in a the password, checks to see if it is the given character type
-var checkForCharacter = function (character) {
-  // if you need this character type and don't already have one in the password
-  if (
-    window[character + "CharacterRequired"] &&
-    !window[character + "CharacterCheck"]
-  ) {
-    // for each character in this character type array
-    for (var i = 0; i < window[character + "Array"].length; i++) {
-      // if the character in the password is the current character then say that the password has this type of character
-      if (
-        window[character + "Array"][i] === password.charAt(password.length - 1)
-      ) {
-        window[character + "CharacterCheck"] = true;
-        break;
-      }
-    }
-  }
-};
+
 
 var generatePassword = function () {
   //setting these to false in case we have to redo the password generation
@@ -192,13 +183,25 @@ var generatePassword = function () {
 
   // for the password length, add a character to the password
   for (var i = 1; i <= passwordLengthNum; i++) {
-    // adds next letter to password
-    password += passwordArray[randomNumberForArray(passwordArray.length)];
-    // checks to see if that letter matches any of the expected criteria
-    checkForCharacter("lowercase");
-    checkForCharacter("uppercase");
-    checkForCharacter("num");
-    checkForCharacter("symbol");
+
+    
+    //  randomly selects one of the identifier numbers above from the passwordArray
+    var characterType = passwordArray[randomNumberForArray(passwordArray.length)]
+    //  using that identifier number, randomly adds one of that type of character to the array, and then marks that the password contains that type of character
+    switch (characterType) {
+      case 1: password += lowercaseArray[randomNumberForArray(lowercaseArray.length)];
+      lowercaseCharacterCheck = true
+      break;
+      case 2: password += uppercaseArray[randomNumberForArray(uppercaseArray.length)];
+      uppercaseCharacterCheck = true
+      break;
+      case 3: password += numArray[randomNumberForArray(numArray.length)];
+      numCharacterCheck = true
+      break;
+      case 4: password += symbolArray[randomNumberForArray(symbolArray.length)];
+      symbolCharacterCheck = true
+      break;
+    }
   }
   // if any of the criteria don't match, remake a password. otherwise write the password!
   if (
