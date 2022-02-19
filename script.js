@@ -68,7 +68,12 @@ var symbolArray = [
   "}",
   "~",
 ];
+var password = "";
 
+// adds given array to the password array
+var concatPasswordArray = function (arrayToConcat) {
+  passwordArray = passwordArray.concat(arrayToConcat);
+};
 // function to return uppercase value of an input letter
 var toUpper = function (letter) {
   return letter.toUpperCase();
@@ -123,35 +128,34 @@ generatePasswordLength = function () {
 // given the type of character, makes that type of character required and adds those characters to the password array
 
 var characterConfirm = function (character) {
-  if (window[(character + "Confirm")]) {
-    window[(character + "CharacterRequired")] = true;
-    concatPasswordArray(window[(character + "Array")]);
+  if (window[character + "Confirm"]) {
+    window[character + "CharacterRequired"] = true;
+    concatPasswordArray(window[character + "Array"]);
   }
-  
-}
+};
 
 var generatePasswordCriteria = function () {
   passwordArray = [];
-// these ask user for the types of characters they want in the password and run character confirm for that character
-   lowercaseConfirm = confirm(
+  // these ask user for the types of characters they want in the password and run character confirm for that character
+  lowercaseConfirm = confirm(
     "Do you want your password to include lowercase letters?"
   );
-  characterConfirm("lowercase")
- // these ask user for the types of characters they want in the password and run character confirm for that character
-   uppercaseConfirm = confirm(
+  characterConfirm("lowercase");
+  // these ask user for the types of characters they want in the password and run character confirm for that character
+  uppercaseConfirm = confirm(
     "Do you want your password to include uppercase letters?"
   );
-characterConfirm("uppercase")
- // these ask user for the types of characters they want in the password and run character confirm for that character
-   numConfirm = confirm("Do you want your password to include numbers?");
-characterConfirm("num")
+  characterConfirm("uppercase");
   // these ask user for the types of characters they want in the password and run character confirm for that character
-   symbolConfirm = confirm(
+  numConfirm = confirm("Do you want your password to include numbers?");
+  characterConfirm("num");
+  // these ask user for the types of characters they want in the password and run character confirm for that character
+  symbolConfirm = confirm(
     "Do you want your password to include special symbols?"
   );
-characterConfirm("symbol")
-  
-// makes the user choose again if they didn't choose any criteria for their password, otherwise it generates the password
+  characterConfirm("symbol");
+
+  // makes the user choose again if they didn't choose any criteria for their password, otherwise it generates the password
   if (!lowercaseConfirm && !uppercaseConfirm && !numConfirm && !symbolConfirm) {
     alert("Please choose at least one type of character for your password");
     generatePasswordCriteria();
@@ -159,20 +163,24 @@ characterConfirm("symbol")
   } else generatePassword();
 };
 // checks for a character in a the password, checks to see if it is the given character type
-var checkForCharacter = function(character) {
+var checkForCharacter = function (character) {
   // if you need this character type and don't already have one in the password
-  if (window[(character + "CharacterRequired")] && !window[(character + "CharacterCheck")]) {
+  if (
+    window[character + "CharacterRequired"] &&
+    !window[character + "CharacterCheck"]
+  ) {
     // for each character in this character type array
-    for (var i = 0; i<window[(character + "Array")].length; i++) {
+    for (var i = 0; i < window[character + "Array"].length; i++) {
       // if the character in the password is the current character then say that the password has this type of character
-      if (window[(character + "Array")][i] === passwordArray[nextCharacterLocation]) {
-        window[(character + "CharacterCheck")] = true;
-        break; 
+      if (
+        window[character + "Array"][i] === password.charAt(password.length - 1)
+      ) {
+        window[character + "CharacterCheck"] = true;
+        break;
       }
     }
   }
-
-}
+};
 
 var generatePassword = function () {
   //setting these to false in case we have to redo the password generation
@@ -180,22 +188,19 @@ var generatePassword = function () {
   uppercaseCharacterCheck = false;
   numCharacterCheck = false;
   symbolCharacterCheck = false;
-  var password = "";
+  password = "";
 
   // for the password length, add a character to the password
   for (var i = 1; i <= passwordLengthNum; i++) {
-    get the next character 
-     nextCharacterLocation = randomNumberForArray(passwordArray.length);
-
-  checkForCharacter("lowercase")
-  checkForCharacter("uppercase")
-  checkForCharacter("num")
-  checkForCharacter("symbol")
-  
-
-    password = password + passwordArray[nextCharacterLocation];
+    // adds next letter to password
+    password += passwordArray[randomNumberForArray(passwordArray.length)];
+    // checks to see if that letter matches any of the expected criteria
+    checkForCharacter("lowercase");
+    checkForCharacter("uppercase");
+    checkForCharacter("num");
+    checkForCharacter("symbol");
   }
-
+  // if any of the criteria don't match, remake a password. otherwise write the password!
   if (
     lowercaseCharacterCheck != lowercaseCharacterRequired ||
     uppercaseCharacterCheck != uppercaseCharacterRequired ||
@@ -205,10 +210,6 @@ var generatePassword = function () {
     generatePassword();
   } else finalPassword = password;
   writePassword();
-};
-
-var concatPasswordArray = function (arrayToConcat) {
-  passwordArray = passwordArray.concat(arrayToConcat);
 };
 
 // Add event listener to generate button
