@@ -111,7 +111,7 @@ generatePasswordLength = function () {
   // checks for password length fitting the parameters and brings them back to the prompt for length if their password length wasn't valid. If it is valid, moves on to generating the password
   if (
     !passwordLengthNum ||
-    passwordLengthNum < 8 ||
+    passwordLengthNum < 4 ||
     passwordLengthNum > 128 ||
     isNaN(passwordLength)
   ) {
@@ -119,29 +119,20 @@ generatePasswordLength = function () {
     generatePasswordLength();
   } else generatePasswordCriteria();
 };
-//
-var characterConfirm = function (character) {
- 
- characterTypeToConfirm = (character + "Confirm");
- characterRequired = (character + "CharacterRequired");
- characterArray = (character + "Array");
-  if (window[characterTypeToConfirm]) {
-    window[characterRequired] = true;
-    concatPasswordArray(window[characterArray]);
-  }
-  debugger
-  console.log(window[characterTypeToConfirm])
-  console.log(window[characterRequired])
-  console.log(window[characterArray])
-  characterTypeToConfirm = ""
-  characterRequired = ""
-  characterArray = ""
 
+// given the type of character, makes that type of character required and adds those characters to the password array
+
+var characterConfirm = function (character) {
+  if (window[(character + "Confirm")]) {
+    window[(character + "CharacterRequired")] = true;
+    concatPasswordArray(window[(character + "Array")]);
+  }
+  
 }
 
 var generatePasswordCriteria = function () {
   passwordArray = [];
-//
+// these 
    lowercaseConfirm = confirm(
     "Do you want your password to include lowercase letters?"
   );
@@ -150,7 +141,7 @@ var generatePasswordCriteria = function () {
   //   lowercaseCharacterRequired = true;
   //   concatPasswordArray(lowercaseArray);
   // }
-  var uppercaseConfirm = confirm(
+   uppercaseConfirm = confirm(
     "Do you want your password to include uppercase letters?"
   );
 characterConfirm("uppercase")
@@ -158,13 +149,13 @@ characterConfirm("uppercase")
   //   uppercaseCharacterRequired = true;
   //   concatPasswordArray(uppercaseArray);
   // }
-  var numConfirm = confirm("Do you want your password to include numbers?");
+   numConfirm = confirm("Do you want your password to include numbers?");
 characterConfirm("num")
   // if (numConfirm) {
   //   numCharacterRequired = true;
   //   concatPasswordArray(numArray);
   // }
-  var symbolConfirm = confirm(
+   symbolConfirm = confirm(
     "Do you want your password to include special symbols?"
   );
 characterConfirm("symbol")
