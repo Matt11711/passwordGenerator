@@ -132,104 +132,66 @@ var characterConfirm = function (character) {
 
 var generatePasswordCriteria = function () {
   passwordArray = [];
-// these 
+// these ask user for the types of characters they want in the password and run character confirm for that character
    lowercaseConfirm = confirm(
     "Do you want your password to include lowercase letters?"
   );
   characterConfirm("lowercase")
-  // if (lowercaseConfirm) {
-  //   lowercaseCharacterRequired = true;
-  //   concatPasswordArray(lowercaseArray);
-  // }
+ // these ask user for the types of characters they want in the password and run character confirm for that character
    uppercaseConfirm = confirm(
     "Do you want your password to include uppercase letters?"
   );
 characterConfirm("uppercase")
-  // if (uppercaseConfirm) {
-  //   uppercaseCharacterRequired = true;
-  //   concatPasswordArray(uppercaseArray);
-  // }
+ // these ask user for the types of characters they want in the password and run character confirm for that character
    numConfirm = confirm("Do you want your password to include numbers?");
 characterConfirm("num")
-  // if (numConfirm) {
-  //   numCharacterRequired = true;
-  //   concatPasswordArray(numArray);
-  // }
+  // these ask user for the types of characters they want in the password and run character confirm for that character
    symbolConfirm = confirm(
     "Do you want your password to include special symbols?"
   );
 characterConfirm("symbol")
-  // if (symbolConfirm) {
-  //   symbolCharacterRequired = true;
-  //   concatPasswordArray(symbolArray);
-  // }
+  
+// makes the user choose again if they didn't choose any criteria for their password, otherwise it generates the password
   if (!lowercaseConfirm && !uppercaseConfirm && !numConfirm && !symbolConfirm) {
     alert("Please choose at least one type of character for your password");
     generatePasswordCriteria();
     return;
   } else generatePassword();
 };
+// checks for a character in a the password, checks to see if it is the given character type
+var checkForCharacter = function(character) {
+  // if you need this character type and don't already have one in the password
+  if (window[(character + "CharacterRequired")] && !window[(character + "CharacterCheck")]) {
+    // for each character in this character type array
+    for (var i = 0; i<window[(character + "Array")].length; i++) {
+      // if the character in the password is the current character then say that the password has this type of character
+      if (window[(character + "Array")][i] === passwordArray[nextCharacterLocation]) {
+        window[(character + "CharacterCheck")] = true;
+        break; 
+      }
+    }
+  }
+
+}
 
 var generatePassword = function () {
+  //setting these to false in case we have to redo the password generation
   lowercaseCharacterCheck = false;
   uppercaseCharacterCheck = false;
   numCharacterCheck = false;
   symbolCharacterCheck = false;
   var password = "";
+
+  // for the password length, add a character to the password
   for (var i = 1; i <= passwordLengthNum; i++) {
-    var nextCharacterLocation = randomNumberForArray(passwordArray.length);
+    get the next character 
+     nextCharacterLocation = randomNumberForArray(passwordArray.length);
 
-    if (lowercaseCharacterRequired && !lowercaseCharacterCheck) {
-      for (
-        var lowercaseIndex = 0;
-        lowercaseIndex < lowercaseArray.length;
-        lowercaseIndex++
-      ) {
-        if (
-          lowercaseArray[lowercaseIndex] ===
-          passwordArray[nextCharacterLocation]
-        ) {
-          lowercaseCharacterCheck = true;
-          break;
-        }
-      }
-    }
-    if (uppercaseCharacterRequired && !uppercaseCharacterCheck) {
-      for (
-        var uppercaseIndex = 0;
-        uppercaseIndex < uppercaseArray.length;
-        uppercaseIndex++
-      ) {
-        if (
-          uppercaseArray[uppercaseIndex] ===
-          passwordArray[nextCharacterLocation]
-        ) {
-          uppercaseCharacterCheck = true;
-          break;
-        }
-      }
-    }
-    if (numCharacterRequired && !numCharacterCheck) {
-      for (var numIndex = 0; numIndex < numArray.length; numIndex++) {
-        if (numArray[numIndex] === passwordArray[nextCharacterLocation]) {
-          numCharacterCheck = true;
-          break;
-        }
-      }
-    }
-
-    if (symbolCharacterRequired && !symbolCharacterCheck) {
-      for (
-        var symbolIndex = 0;
-        symbolIndex < symbolArray.length;
-        symbolIndex++
-      ) {
-        if (symbolArray[symbolIndex] === passwordArray[nextCharacterLocation]) {
-          symbolCharacterCheck = true;
-          break;
-        }
-      }
-    }
+  checkForCharacter("lowercase")
+  checkForCharacter("uppercase")
+  checkForCharacter("num")
+  checkForCharacter("symbol")
+  
 
     password = password + passwordArray[nextCharacterLocation];
   }
